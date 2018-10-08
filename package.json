@@ -1,0 +1,25 @@
+{
+  "name": "webapp-spellcheck-learn-words",
+  "version": "1.0.0",
+  "description": "A plugin for oXygen XML Web Author which allows adding of learned or forbidden words to the spellchecker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreip1123/web-author-learn-words-plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreip1123/web-author-learn-words-plugin/issues"
+  },
+  "homepage": "https://github.com/andreip1123/web-author-learn-words-plugin#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.1",
+    "sync-i18n": "0.0.10"
+  }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin SYSTEM "../plugin.dtd">
+
+<plugin
+    class="com.oxygenxml.learnword.LearnWordPlugin"
+
+    id="web-author-learn-words-plugin"
+    name="spellcheck-learn-words"
+    description="Plugin for adding learned/forbidden words functionality to oXygen XML Web Author spellchecking."
+    version="${project.nosnapshot.version}"
+    vendor="com.oxygenxml">
+
+  <runtime>
+    <librariesFolder name="lib" />
+    <library name="target/classes" />
+    <librariesFolder name="target/lib" />
+  </runtime>
+
+  <extension type="WorkspaceAccess" class="com.oxygenxml.learnword.DictionarySetterExtension"/>
+  <extension type="WebappServlet" class="com.oxygenxml.learnword.ConfigurationPage" role="config"/>
+  <extension type="WebappStaticResourcesFolder" path="web/static/" href="learn-word"/>
+  
+</plugin>

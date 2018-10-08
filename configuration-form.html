@@ -1,0 +1,41 @@
+<style>
+    .container {
+        padding: 15px;
+    }
+    .container:not(:first-child) {
+        border-top: 1px solid #e6e6e6;
+    }
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .fullWidth {
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <form class="configz">
+        <div id="file" class="container">
+            <div><input id="fileCheckBox" type="checkbox" th:name="${FILE_SELECTED_NAME}" th:checked="${fileSelectedChecked}"> Use file:</div>
+            <div class="content" th:classappend="${urlSelectedChecked} ? disabled : ''">
+                <div><input class="fullWidth" th:attrappend="disabled=${urlSelectedChecked} ? 'true' : ''" th:name="${FILE_PATH_NAME}" th:value="${filePathValue}"/></div>
+            </div>
+        </div>
+
+        <div id="url" class="container">
+            <div><input id="urlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use URL:</div>
+            <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
+                <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
+            </div>
+
+
+            <!--<div><input id="postUrlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use different URL for adding words:</div>
+            <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
+                <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
+            </div>-->
+        </div>
+    </form>
+</div>
+
+<script src='../plugin-resources/learn-word/custom.js'></script>

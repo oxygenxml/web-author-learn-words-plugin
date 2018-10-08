@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dictionary>
+    <Learned>
+        <Language code="en">
+            <w proposedBy="usera, bierbier" proposedDate="12355">worda</w>
+            <w>wordb</w>
+            <w>wordc</w>
+        </Language>
+        <Language code="fr">
+            <w>worta</w>
+            <w>wortb</w>
+        </Language>
+    </Learned>
+    <Forbidden>
+        <Language code="en">
+            <w>should</w>
+            <w>would</w>
+            <w>must</w>
+        </Language>
+        <Language code="de">
+            <w>verboten</w>
+            <w>ignoriert</w>
+        </Language>
+    </Forbidden>
+</Dictionary>

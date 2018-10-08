@@ -1,0 +1,7 @@
+/target
+.idea
+.project
+.settings
+.classpath
+node_modules
+web/0translations.js
