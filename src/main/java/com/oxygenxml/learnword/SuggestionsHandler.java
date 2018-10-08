@@ -15,31 +15,43 @@ public class SuggestionsHandler {
   }
   
   /**
+   * Get the closest suggestions for a given word from the list of learned words.
    * 
-   * @param word 
-   * @param learnedWords
-   * @param numberOfSuggestions
-   * @return
+   * @param word The initial word.
+   * @param learnedWords The list of learned words.
+   * @param numberOfSuggestions The maximum number of suggestions to get.
+   * 
+   * @return The list of suggestions for the word.
    */
   public static String[] getSuggestions(String word, Set<String> learnedWords, int numberOfSuggestions) {
-    TreeMap<Integer, String> matches = new TreeMap<>();
+    TreeMap<Integer, List<String>> matches = new TreeMap<>();
     String[] allLearnedWords = learnedWords.toArray(new String[learnedWords.size()]);
     for (int i = 0; i < allLearnedWords.length; i++) {
       String learnedWord = allLearnedWords[i];
-      matches.put(calculate(learnedWord, word), learnedWord);
+      int distance = calculate(learnedWord, word);
+      if (matches.get(distance) != null) {
+        matches.get(distance).add(learnedWord);
+      } else {
+        List<String> words = new ArrayList<>();
+        words.add(learnedWord);
+        matches.put(distance, words);
+      }
     }
     return getSuggestionsFromCostMap(matches, numberOfSuggestions);
   }
 
-  private static String[] getSuggestionsFromCostMap(Map<Integer, String> matches, int numberOfSuggestions) {
+  private static String[] getSuggestionsFromCostMap(Map<Integer, List<String>> matches, int numberOfSuggestions) {
     List<String> s = new ArrayList<>(); 
     if (!matches.isEmpty()) {
       int l = 0;
       Set<Integer> keys = matches.keySet();
       for (Iterator<Integer> i = keys.iterator(); i.hasNext() && l < numberOfSuggestions;) {
         Integer key = i.next();
-        s.add(matches.get(key));
-        l++;
+        List<String> currentMatches = matches.get(key);
+        
+        for (int j = 0; j < currentMatches.size() && l < numberOfSuggestions; j++, l++) {
+          s.add(currentMatches.get(j));
+        }
       }
     }
     return s.toArray(new String[s.size()]);

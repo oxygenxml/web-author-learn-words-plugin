@@ -58,6 +58,15 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           } else {
             logger.error("No source set for the learn word dictionary.");
           }
+          
+          // Get the number of suggestions to show from the dictionary.
+          int suggestionsToShow = 1;
+          String suggestionsNumberFromOptions = opts.getOption(ConfigurationPage.SUGGESTIONS_NUMBER_NAME, null);
+          if (suggestionsNumberFromOptions != null) {
+            suggestionsToShow = Integer.parseInt(suggestionsNumberFromOptions);
+          }
+          apiDict.setNumberOfSuggestions(suggestionsToShow);
+          
         } catch (ParserConfigurationException | SAXException | IOException e) {
           logger.error("Error while getting learn word dictionary");
         }

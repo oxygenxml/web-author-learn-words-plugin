@@ -17,6 +17,8 @@ public class ConfigurationPage extends PluginConfigExtension {
   
   static final String URL_SELECTED_NAME = "url-selected.name";
   static final String URL_NAME = "url.name";
+  
+  static final String SUGGESTIONS_NUMBER_NAME = "suggestions-no.name";
 
   private static final String DEFAULT_URL = "";
   
@@ -28,6 +30,10 @@ public class ConfigurationPage extends PluginConfigExtension {
   @Override
   public String getOptionsForm() {  
     HashMap<String, Object> context = new HashMap<>();
+    
+    String suggestionsNumberValue = getOption(SUGGESTIONS_NUMBER_NAME, "1");
+    context.put("SUGGESTIONS_NUMBER_NAME", SUGGESTIONS_NUMBER_NAME);
+    context.put("suggestionsNumberValue", suggestionsNumberValue);
     
     String filePathValue = getOption(FILE_PATH_NAME, LearnWordPlugin.getDefaultTermsFilePath());
     String fileSelectedChecked = getOption(FILE_SELECTED_NAME, "on");
@@ -45,11 +51,6 @@ public class ConfigurationPage extends PluginConfigExtension {
     context.put("urlValue", urlValue);
     
     return getConfigurationForm(context);
-  }
-
-  @Override
-  public String getOptionsJson() {
-    return "{\"hue\": \"true\"}";
   }
 
   @Override
@@ -79,5 +80,10 @@ public class ConfigurationPage extends PluginConfigExtension {
     context.setVariables(contextMap);
     
     return htmlTplEngine.process("configuration-form", context);
+  }
+
+  @Override
+  public String getOptionsJson() {
+    return null;
   }
 }

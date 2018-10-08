@@ -16,6 +16,9 @@
 
 <div class="container">
     <form class="configz">
+        <div>
+            <label>Suggestions to show: <input th:name="${SUGGESTIONS_NUMBER_NAME}" th:value="${suggestionsNumberValue}"/></label>
+        </div>
         <div id="file" class="container">
             <div><input id="fileCheckBox" type="checkbox" th:name="${FILE_SELECTED_NAME}" th:checked="${fileSelectedChecked}"> Use file:</div>
             <div class="content" th:classappend="${urlSelectedChecked} ? disabled : ''">
