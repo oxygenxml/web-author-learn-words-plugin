@@ -82,8 +82,6 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
       String filePath = opts.getOption(ConfigurationPage.FILE_PATH_NAME, null);
       File termsDictFile = new File(filePath);
       FileUtils.writeStringToFile(termsDictFile, dictionary.toString(), "utf8");
-    } else if (opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null).equals("on")) {
-      // TODO: do post request to update dictionary file from URL.
     }
   }
 }
