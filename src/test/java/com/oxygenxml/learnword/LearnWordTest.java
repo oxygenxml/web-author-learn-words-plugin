@@ -80,7 +80,7 @@ public class LearnWordTest {
     assertEquals("aaaaaa", s[0]);
     assertEquals("aaaaa", s[1]);
     assertEquals("aaaa", s[2]);
-    assertEquals("bbbb", s[3]);
+    assertEquals("bbbbb", s[3]);
     
     // Number of suggestions is greater than number of learned words.
     s = apiDict.getSuggestions(fr, "aaaaaaa");
