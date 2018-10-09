@@ -31,12 +31,6 @@
             <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
                 <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
             </div>
-
-
-            <!--<div><input id="postUrlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use different URL for adding words:</div>
-            <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
-                <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
-            </div>-->
         </div>
     </form>
 </div>
