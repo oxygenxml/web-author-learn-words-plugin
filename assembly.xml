@@ -36,6 +36,9 @@
       <source>plugin.xml</source>
       <filtered>true</filtered>
     </file>
+    <file>
+      <source>configuration-form.html</source>
+    </file>
   </files>
 
 </assembly>
