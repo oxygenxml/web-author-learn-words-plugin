@@ -25,6 +25,17 @@
         <include>**/*</include>
       </includes>
     </fileSet>
+    
+    <fileSet>
+      <directory>web</directory>
+      <outputDirectory>/web</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+      <excludes>
+        <exclude>**.js</exclude>
+      </excludes>
+    </fileSet>
   </fileSets>
   
   <files>
