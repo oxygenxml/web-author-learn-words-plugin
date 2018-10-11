@@ -2,6 +2,9 @@ package com.oxygenxml.learnword;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -32,12 +35,14 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
   @Override
   public String doOperation(AuthorDocumentModel model, ArgumentsMap args)
       throws AuthorOperationException {
-    
-    String mode = (String) args.getArgumentValue("mode");
+
+    String result = null;
     String lang = (String) args.getArgumentValue("lang");
     String word = (String) args.getArgumentValue("word");
-    
-    String result = null;
+    String mode = (String) args.getArgumentValue("mode");
+    if (mode == null) {
+      mode = "learned";
+    }
     
     if (word != null && word.length() != 0) {
       WebappSpellchecker spellchecker = model.getSpellchecker();
@@ -56,10 +61,31 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
       }
       
       if (result.equals("ok")) {
-        try {
-          synchronizeFile(spellchecker.getTermsDictionary());
-        } catch (IOException e) {
-          logger.error("Error while synchronizing learn word dictionary");
+        WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
+        if (opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null).equals("on")) {
+          try {
+            synchronizeFile(spellchecker.getTermsDictionary());
+          } catch (IOException e) {
+            logger.error("Error while synchronizing learn word dictionary");
+          }
+        } else if (opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null).equals("on")) {
+          String learnWordUrl = opts.getOption(ConfigurationPage.URL_NAME, null);
+          if (learnWordUrl != null) {
+            try {
+              URL url = new URL(learnWordUrl);
+              HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+              connection.setRequestMethod("POST");
+              connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+              OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream()); 
+              out.write("mode=" + mode + "&lang=" + lang + "&word=" + word);
+              out.close();
+              connection.connect();
+            } catch (IOException e) {
+              logger.error("Error while sending learn word request");
+            }
+          } else {
+            logger.error("No URL specified for learn word action");
+          }
         }
       }
     }
@@ -75,13 +101,9 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
    * @throws IOException
    */
   private void synchronizeFile(Dictionary dictionary) throws IOException {
-    
     WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
-    
-    if (opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null).equals("on")) {
-      String filePath = opts.getOption(ConfigurationPage.FILE_PATH_NAME, null);
-      File termsDictFile = new File(filePath);
-      FileUtils.writeStringToFile(termsDictFile, dictionary.toString(), "utf8");
-    }
+    String filePath = opts.getOption(ConfigurationPage.FILE_PATH_NAME, null);
+    File termsDictFile = new File(filePath);
+    FileUtils.writeStringToFile(termsDictFile, dictionary.toString(), "utf8");
   }
 }

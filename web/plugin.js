@@ -20,8 +20,7 @@
       e.editor.getActionsManager().invokeOperation(
         'com.oxygenxml.learnword.UpdateDictionaryOperation', {
           word: this.wordToLearn_,
-          lang: this.language_,
-          mode: 'learn'
+          lang: this.language_
         },
         function (err, resultString) {
           if (resultString === 'ok') {

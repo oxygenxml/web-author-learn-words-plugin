@@ -84,6 +84,7 @@ public class ConfigurationPage extends PluginConfigExtension {
 
   @Override
   public String getOptionsJson() {
-    return null;
+    // Shows a console error if null.
+    return "{\"a\": \"b\"}";
   }
 }
