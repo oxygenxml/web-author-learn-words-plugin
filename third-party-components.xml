@@ -656,7 +656,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <about>OGNL - Object Graph Navigation Library</about>
             <licensor>OpenSymphony</licensor>
             <start-year>1997</start-year>
-            <project-url>http://ognl.org</project-url>
+            <project-url>http://commons.apache.org/proper/commons-ognl/</project-url>
         </project-info>
         <license>
             <type>The Apache Software License, Version 2.0</type>
