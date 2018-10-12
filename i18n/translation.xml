@@ -6,12 +6,20 @@
         <language description="Japanese" lang="ja_JP" localeDescription="日本語"/>
         <language description="Dutch" lang="nl_NL" localeDescription="Nederlands"/>
     </languageList>
-    <key distribution="common" value="Learn_word_X">
+    <key value="Learn_word_X">
         <comment>Learn word action</comment>
         <val lang="en_US">Learn Word "{0}"</val>
         <val lang="de_DE">Wort "{0}" lernen</val>
         <val lang="fr_FR">Apprendre le mot "{0}"</val>
         <val lang="ja_JP">単語 "{0}" について学習</val>
         <val lang="nl_NL">Woord "{0}" leren</val>
+    </key>
+    <key value="cannot_learn_forbidden_word">
+        <comment>Error message shown when trying to learn forbidden word.</comment>
+        <val lang="en_US">Cannot learn forbidden word.</val>
+        <val lang="de_DE">Cannot learn forbidden word.</val>
+        <val lang="fr_FR">Cannot learn forbidden word.</val>
+        <val lang="ja_JP">Cannot learn forbidden word.</val>
+        <val lang="nl_NL">Cannot learn forbidden word.</val>
     </key>
 </translation>

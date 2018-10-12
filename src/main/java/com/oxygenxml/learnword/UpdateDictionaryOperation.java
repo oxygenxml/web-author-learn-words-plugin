@@ -15,6 +15,8 @@ import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
 import ro.sync.ecss.extensions.api.webapp.AuthorOperationWithResult;
 import ro.sync.ecss.extensions.api.webapp.WebappRestSafe;
 import ro.sync.ecss.extensions.api.webapp.WebappSpellchecker;
+import ro.sync.ecss.extensions.api.webapp.access.WebappPluginWorkspace;
+import ro.sync.exml.workspace.api.PluginResourceBundle;
 import ro.sync.exml.workspace.api.PluginWorkspaceProvider;
 import ro.sync.exml.workspace.api.options.WSOptionsStorage;
 import ro.sync.exml.workspace.api.spell.Dictionary;
@@ -53,7 +55,8 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
         result = "ok";
       } else {
         if (td.isForbidden(lang, word)) {
-          result = "Cannot learn forbidden word.";
+          PluginResourceBundle rb = ((WebappPluginWorkspace)PluginWorkspaceProvider.getPluginWorkspace()).getResourceBundle();
+          result = rb.getMessage(TranslationTags.CANNOT_LEARN_FORBIDDEN_WORD);
         } else {
           td.addLearnedWord(lang, word);
           result = "ok";
@@ -66,7 +69,7 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
           try {
             synchronizeFile(spellchecker.getTermsDictionary());
           } catch (IOException e) {
-            logger.error("Error while synchronizing learn word dictionary");
+            logger.error("Error while synchronizing learn word dictionary ", e);
           }
         } else if (opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null).equals("on")) {
           String learnWordUrl = opts.getOption(ConfigurationPage.URL_NAME, null);
@@ -81,7 +84,7 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
               out.close();
               connection.connect();
             } catch (IOException e) {
-              logger.error("Error while sending learn word request");
+              logger.error("Error while sending learn word request ", e);
             }
           } else {
             logger.error("No URL specified for learn word action");
