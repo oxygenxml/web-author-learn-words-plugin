@@ -79,9 +79,9 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
               HttpURLConnection connection = (HttpURLConnection) url.openConnection();
               connection.setRequestMethod("POST");
               connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-              OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream()); 
-              out.write("mode=" + mode + "&lang=" + lang + "&word=" + word);
-              out.close();
+              try (OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream())) {
+                out.write("mode=" + mode + "&lang=" + lang + "&word=" + word);
+              }
               connection.connect();
             } catch (IOException e) {
               logger.error("Error while sending learn word request ", e);
