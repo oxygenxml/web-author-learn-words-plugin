@@ -2,6 +2,7 @@ package com.oxygenxml.learnword;
 
 public interface TranslationTags {
   
+  
   /**
    * Error message shown when trying to learn forbidden word.
    * 
