@@ -1,13 +1,13 @@
 <style>
     .container {
         padding: 15px;
+        font-family: robotolight, Arial, Helvetica, sans-serif;
     }
-    .container:not(:first-child) {
+    #url {
         border-top: 1px solid #e6e6e6;
     }
     .disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
+        opacity: 0.3;
     }
     .fullWidth {
         width: 100%;
@@ -19,17 +19,30 @@
         <div style="margin-bottom: 15px;">
             <label>Suggestions to show: <input style="width:40px;" th:name="${SUGGESTIONS_NUMBER_NAME}" th:value="${suggestionsNumberValue}"/></label>
         </div>
+        <div>Dictionary source:</div>
         <div id="file" class="container">
-            <div><input id="fileCheckBox" type="checkbox" th:name="${FILE_SELECTED_NAME}" th:checked="${fileSelectedChecked}"> Use file:</div>
+            <label><input id="fileCheckBox" type="checkbox" th:name="${FILE_SELECTED_NAME}" th:checked="${fileSelectedChecked}"> Use file:</label>
             <div class="content" th:classappend="${urlSelectedChecked} ? disabled : ''">
                 <div><input class="fullWidth" th:attrappend="disabled=${urlSelectedChecked} ? 'true' : ''" th:name="${FILE_PATH_NAME}" th:value="${filePathValue}"/></div>
             </div>
         </div>
-
         <div id="url" class="container">
-            <div><input id="urlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use URL:</div>
+            <label><input id="urlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use URL:</label>
             <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
                 <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
+                <div class="more-info">
+                    <p>
+                        GET requests are made to load the dictionary.
+                        <br>
+                        POST requests are made to learn words.
+                    </p>
+                    <p>Parameters (x-www-form-urlencoded) are:</p>
+                    <ul>
+                        <li><i>mode</i>: "learned" or "forbidden"</li>
+                        <li><i>lang</i>: "en" or other two letter language codes.</li>
+                        <li><i>word</i>: the word to learn or forbid for the specified language.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </form>
