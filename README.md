@@ -50,7 +50,7 @@ with the following form parameters:
 Installation
 ------------
 
-To install this plugin, download one of the releases (link) and [upload it in your Web Author deployment|https://www.oxygenxml.com/doc/ug-webauthor/topics/webapp-configure-plugins.html].
+To install this plugin, download one of the releases ([link](https://github.com/oxygenxml/web-author-learn-words-plugin/releases)) and [upload it in your Web Author deployment](https://www.oxygenxml.com/doc/ug-webauthor/topics/webapp-configure-plugins.html).
 
 Configuration
 -------------
