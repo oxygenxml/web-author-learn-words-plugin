@@ -41,7 +41,7 @@ public class LearnWordPlugin extends ro.sync.exml.plugin.Plugin {
   }
   
   public static String getDefaultTermsFilePath () {
-    String base = LearnWordPlugin.getBaseDir().getAbsolutePath();
+    String base = System.getProperty("user.home");
     if (!base.endsWith("/")) {
       base += "/";
     }

@@ -38,6 +38,14 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
   public String doOperation(AuthorDocumentModel model, ArgumentsMap args)
       throws AuthorOperationException {
 
+    WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
+    
+    if (!opts.getOption(ConfigurationPage.READ_ONLY_MODE, "on").equals("off")) {
+      // This should never be shown, since there should be no actions in read-only mode.
+      // Would happen if someone makes the request manually.
+      return "Learn words plugin is set to Read-only mode.";
+    }
+
     String result = null;
     String lang = (String) args.getArgumentValue("lang");
     String word = (String) args.getArgumentValue("word");
@@ -64,7 +72,6 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
       }
       
       if (result.equals("ok")) {
-        WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
         if (opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null).equals("on")) {
           try {
             synchronizeFile(spellchecker.getTermsDictionary());

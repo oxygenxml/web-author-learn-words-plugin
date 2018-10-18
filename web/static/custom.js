@@ -1,5 +1,6 @@
 document.getElementById('fileCheckBox').addEventListener('change', toggleContainers);
 document.getElementById('urlCheckBox').addEventListener('change', toggleContainers);
+document.getElementById('readOnlyModeCheckBox').addEventListener('change', togglePostInfo);
 
 function findAncestorWithClass(el, cls) {
   while (el && !el.classList.contains(cls)) {
@@ -7,6 +8,21 @@ function findAncestorWithClass(el, cls) {
   }
   return el;
 }
+
+// Show information regarding POST requests if read-only mode is disabled.
+function togglePostInfo(e) {
+  var i;
+  var checked = e.currentTarget.checked;
+  var postInfos = document.querySelectorAll('.post');
+  for (i = 0; i < postInfos.length; i++) {
+    if (checked) {
+      postInfos[i].classList.add('hidden');
+    } else {
+      postInfos[i].classList.remove('hidden');
+    }
+  }
+}
+
 
 function toggleContainers(e) {
   var checked = e.currentTarget.checked;

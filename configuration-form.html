@@ -1,7 +1,13 @@
 <style>
     .container {
         padding: 15px;
+    }
+    .roboto {
         font-family: robotolight, Arial, Helvetica, sans-serif;
+    }
+    .container p {
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
     #url {
         border-top: 1px solid #e6e6e6;
@@ -12,12 +18,39 @@
     .fullWidth {
         width: 100%;
     }
+    .hidden {
+        display: none;
+    }
+    .description {
+        font-size: 14px;
+        color: #8e8e8e;
+    }
+    .parameters {
+        background-color: #f0f8ff;
+        border-radius: 4px;
+        border: 1px solid #e6e6e6;
+        padding: 5px;
+        color: #424242;
+    }
+    .parameters ul {
+        padding-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 </style>
 
-<div class="container">
-    <form class="configz">
-        <div style="margin-bottom: 15px;">
-            <label>Suggestions to show: <input style="width:40px;" th:name="${SUGGESTIONS_NUMBER_NAME}" th:value="${suggestionsNumberValue}"/></label>
+<div class="container roboto" style="padding: 0;">
+    <form class="configz" style="margin-bottom: 0;">
+        <div style="padding-bottom: 20px;">
+            <div style="padding: 10px 10px 10px 15px;">
+                <label>Number of suggestions to show:
+                    <input style="width:40px;" th:name="${SUGGESTIONS_NUMBER_NAME}" th:value="${suggestionsNumberValue}"/>
+                </label>
+            </div>
+            <div style="padding: 10px 10px 10px 15px;">
+                <label ><input id="readOnlyModeCheckBox" type="checkbox" th:name="${READ_ONLY_MODE}" th:checked="${readOnlyValue}"/> Read-only mode
+                    <div class="description" style="margin-left:25px">New words cannot be added from the Web Author</div></label>
+            </div>
         </div>
         <div>Dictionary source:</div>
         <div id="file" class="container">
@@ -26,22 +59,24 @@
                 <div><input class="fullWidth" th:attrappend="disabled=${urlSelectedChecked} ? 'true' : ''" th:name="${FILE_PATH_NAME}" th:value="${filePathValue}"/></div>
             </div>
         </div>
-        <div id="url" class="container">
+        <div id="url" class="container" style="padding-bottom: 0;">
             <label><input id="urlCheckBox" type="checkbox" th:name="${URL_SELECTED_NAME}" th:checked="${urlSelectedChecked}"> Use URL:</label>
             <div class="content" th:classappend="${fileSelectedChecked} ? disabled : ''">
                 <div><input class="fullWidth" th:attrappend="disabled=${fileSelectedChecked} ? 'true' : ''" th:name="${URL_NAME}" th:value="${urlValue}"/></div>
-                <div class="more-info">
+                <div class="more-info description">
                     <p>
-                        GET requests are made to load the dictionary.
-                        <br>
-                        POST requests are made to learn words.
+                        GET requests are made to load the dictionary.<br>
+                        <span class="post" th:classappend="${readOnlyValue} ? hidden : ''">POST requests are made to learn words.</span>
                     </p>
-                    <p>Parameters (x-www-form-urlencoded) are:</p>
-                    <ul>
-                        <li><i>mode</i>: "learned" or "forbidden".</li>
-                        <li><i>lang</i>: "en" or other two letter language codes.</li>
-                        <li><i>word</i>: the word to learn or forbid for the specified language.</li>
-                    </ul>
+                    <div class="post parameters" th:classappend="${readOnlyValue} ? hidden : ''">
+                        <p>Parameters (x-www-form-urlencoded) are:</p>
+                        <ul>
+                            <li><i>mode</i>: "learned" or "forbidden".</li>
+                            <li><i>lang</i>: "en" or other two letter language codes.</li>
+                            <li><i>word</i>: the word to learn or forbid for the specified language.</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>

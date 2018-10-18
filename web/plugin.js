@@ -1,6 +1,12 @@
 (function () {
   goog.events.listenOnce(workspace, sync.api.Workspace.EventType.EDITOR_LOADED, function(e) {
 
+    // If read-only dictionary, do nothing.
+    var readOnlyMode = sync.options.PluginsOptions.getClientOption('lw.read-only-mode');
+    if (!readOnlyMode || readOnlyMode !== 'off') {
+      return;
+    }
+
     var spellchecker = e.editor.getSpellChecker();
     if (!spellchecker) {
       console.warn('Could not get spellchecker.');
@@ -26,7 +32,7 @@
           if (resultString === 'ok') {
             spellchecker.performFullSpellCheck();
           } else {
-            workspace.getNotificationManager().showWarning(resultString, true)
+            workspace.getNotificationManager().showWarning(resultString, true);
             console.warn(resultString);
           }
           callback && callback();

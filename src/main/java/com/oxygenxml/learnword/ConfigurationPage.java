@@ -22,6 +22,8 @@ public class ConfigurationPage extends PluginConfigExtension {
 
   private static final String DEFAULT_URL = "";
   
+  static final String READ_ONLY_MODE = "lw.read-only-mode";
+  
   
 
   /**
@@ -49,6 +51,10 @@ public class ConfigurationPage extends PluginConfigExtension {
     context.put("urlSelectedChecked", urlSelectedChecked.equals("on"));
     context.put("URL_NAME", URL_NAME);
     context.put("urlValue", urlValue);
+    
+    boolean readOnlyValue = getOption(READ_ONLY_MODE, "off").equals("on");
+    context.put("READ_ONLY_MODE", READ_ONLY_MODE);
+    context.put("readOnlyValue", readOnlyValue);
     
     return getConfigurationForm(context);
   }
@@ -85,6 +91,6 @@ public class ConfigurationPage extends PluginConfigExtension {
   @Override
   public String getOptionsJson() {
     // Shows a console error if null.
-    return "{\"a\": \"b\"}";
+    return "{\"lw.read-only-mode\": \"" + getOption(READ_ONLY_MODE, "on") + "\"}";
   }
 }
