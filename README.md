@@ -57,3 +57,8 @@ Configuration
 
 The location of the dictionary file and other options can be configured from the Web Author Administration Page.
 
+Copyright and License
+---------------------
+Copyright 2018 Syncro Soft SRL.
+
+This project is licensed under [Apache License 2.0](https://github.com/oxygenxml/web-author-learn-words-plugin/blob/master/LICENSE)
