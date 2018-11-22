@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/andreip1123/web-author-learn-words-plugin#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.1",
-    "sync-i18n": "0.0.10"
+    "gulp": "3.9.1",
+    "gulp-concat": "2.6.1",
+    "gulp-uglify": "3.0.1",
+    "sync-i18n": "0.0.x"
   }
 }
