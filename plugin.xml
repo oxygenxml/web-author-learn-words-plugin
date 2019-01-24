@@ -8,7 +8,7 @@
     name="spellcheck-learn-words"
     description="Plugin for adding learned/forbidden words functionality to oXygen XML Web Author spellchecking."
     version="${project.nosnapshot.version}"
-    vendor="com.oxygenxml">
+    vendor="Syncro Soft SRL">
 
   <runtime>
     <librariesFolder name="lib" />
