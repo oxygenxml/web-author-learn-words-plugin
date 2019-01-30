@@ -68,7 +68,7 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           apiDict.setNumberOfSuggestions(suggestionsToShow);
           
         } catch (ParserConfigurationException | SAXException | IOException e) {
-          logger.error("Error while getting learn word dictionary");
+          logger.error("Error while getting learn word dictionary", e);
         }
       }
       
