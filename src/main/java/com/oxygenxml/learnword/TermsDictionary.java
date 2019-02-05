@@ -237,6 +237,8 @@ public class TermsDictionary implements Dictionary {
       // The file does not exist on disk, so no words to be added.
       logger.debug("Learned words dictionary file not found", e);
     }
-    addWordsFromString(fileContent);
+    if (fileContent != "") {
+      addWordsFromString(fileContent);
+    }
   }
 }
