@@ -2,6 +2,7 @@ package com.oxygenxml.learnword;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -18,18 +19,23 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.oxygenxml.charpicker.SpecialCharServlet;
 import com.oxygenxml.learnword.xmlmarshal.MarshalDictionary;
 
 import ro.sync.exml.workspace.api.spell.Dictionary;
 
 @XmlRootElement(name = "WordList")
 public class TermsDictionary implements Dictionary {
+  
+  private static final Logger logger = Logger.getLogger(TermsDictionary.class.getName());
+
   
   private static final String LEARNED_WORDS_TYPE = "Learned";
   private static final String FORBIDDEN_WORDS_TYPE = "Forbidden";
@@ -225,7 +231,13 @@ public class TermsDictionary implements Dictionary {
    */
   public void addWordsFromFile(String filePath) throws IOException, ParserConfigurationException, SAXException {
     File targetFile = new File(filePath);
-    String fileContent = FileUtils.readFileToString(targetFile, "UTF-8");
+    String fileContent = "";
+    try {
+      FileUtils.readFileToString(targetFile, "UTF-8");
+    } catch (FileNotFoundException e) {
+      // The file does not exist on disk, so no words to be added.
+      logger.debug("Learned words dictionary file not found", e);
+    }
     addWordsFromString(fileContent);
   }
 }
