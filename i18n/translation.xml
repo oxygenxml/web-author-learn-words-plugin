@@ -17,9 +17,9 @@
     <key value="cannot_learn_forbidden_word">
         <comment>Error message shown when trying to learn forbidden word.</comment>
         <val lang="en_US">Cannot learn forbidden word.</val>
-        <val lang="de_DE">Cannot learn forbidden word.</val>
-        <val lang="fr_FR">Cannot learn forbidden word.</val>
-        <val lang="ja_JP">Cannot learn forbidden word.</val>
-        <val lang="nl_NL">Cannot learn forbidden word.</val>
+        <val lang="de_DE">Kann verbotenes Wort nicht eingeben.</val>
+        <val lang="fr_FR">Impossible d'ajouter un mot interdit.</val>
+        <val lang="ja_JP">使用できない単語を追加することはできません。</val>
+        <val lang="nl_NL">Kan verboden woord niet toevoegen.</val>
     </key>
 </translation>
