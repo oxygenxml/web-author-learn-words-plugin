@@ -52,7 +52,7 @@ public class ConfigurationPage extends PluginConfigExtension {
     context.put("URL_NAME", URL_NAME);
     context.put("urlValue", urlValue);
     
-    boolean readOnlyValue = getOption(READ_ONLY_MODE, "off").equals("on");
+    boolean readOnlyValue = getOption(READ_ONLY_MODE, "on").equals("on");
     context.put("READ_ONLY_MODE", READ_ONLY_MODE);
     context.put("readOnlyValue", readOnlyValue);
     
