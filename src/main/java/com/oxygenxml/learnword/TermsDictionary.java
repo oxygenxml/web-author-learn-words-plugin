@@ -232,7 +232,7 @@ public class TermsDictionary implements Dictionary {
     File targetFile = new File(filePath);
     String fileContent = "";
     try {
-      FileUtils.readFileToString(targetFile, "UTF-8");
+      fileContent = FileUtils.readFileToString(targetFile, "UTF-8");
     } catch (FileNotFoundException e) {
       // The file does not exist on disk, so no words to be added.
       logger.debug("Learned words dictionary file not found", e);
