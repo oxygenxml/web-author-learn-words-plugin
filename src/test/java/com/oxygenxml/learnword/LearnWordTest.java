@@ -2,7 +2,13 @@ package com.oxygenxml.learnword;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 public class LearnWordTest {
   
@@ -89,5 +95,22 @@ public class LearnWordTest {
     
     s = apiDict.getSuggestions(ja, "aaaaaaa");
     assertEquals(0, s.length);
+  }
+  /**
+   * WA-2827: Check that loading from file method works as expected.
+   */
+  @Test
+  public void testFileOperations() {
+    TermsDictionary apiDict = new TermsDictionary();
+    try {
+      String filePath = new File("test-files/from_url.xml").getAbsolutePath();
+      apiDict.addWordsFromFile(filePath);
+    } catch (IOException | ParserConfigurationException | SAXException e) {
+      e.printStackTrace();
+    }
+    assertTrue(apiDict.isLearned("en", "wordb"));
+    assertTrue(apiDict.isLearned("fr", "worta"));
+    assertTrue(apiDict.isForbidden("en", "should"));
+    assertTrue(apiDict.isForbidden("de", "ignoriert"));
   }
 }

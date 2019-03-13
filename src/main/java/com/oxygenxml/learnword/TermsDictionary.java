@@ -142,13 +142,6 @@ public class TermsDictionary implements Dictionary {
     openStream.close();
   }
   
-  public void addWordsFromFile (String directory, String filePath) 
-      throws IOException, ParserConfigurationException, SAXException {
-    File fileToRead = new File(directory, filePath);
-    String fileContent = FileUtils.readFileToString(fileToRead, "UTF-8");
-    addWordsFromString(fileContent);
-  }
-  
   public void addWordsFromString (String xmlString) 
       throws ParserConfigurationException, SAXException, IOException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
