@@ -107,6 +107,10 @@ public class LearnWordTest {
     apiDict.addLearnedWord(en, "aaaaaa");
     
     String[] s = apiDict.getSuggestions(en, "aaabbb");
+    assertEquals(1, s.length);
+    assertEquals("aaaaaa", s[0]);
+    
+    s = apiDict.getSuggestions(en, "aabbbb");
     assertEquals(0, s.length);
     
     // If word sizes vary too much, not relevant.
@@ -119,7 +123,9 @@ public class LearnWordTest {
     s = apiDict.getSuggestions(en, "aa");
     assertEquals(1, s.length);
     s = apiDict.getSuggestions(en, "aaaa");
-    assertEquals(1, s.length);
+    assertEquals(2, s.length);
+    assertEquals("aaa", s[0]);
+    assertEquals("aaaaaa", s[1]);
   }
   
   /**
