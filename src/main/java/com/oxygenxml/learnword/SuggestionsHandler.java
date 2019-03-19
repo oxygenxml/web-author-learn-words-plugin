@@ -28,13 +28,20 @@ public class SuggestionsHandler {
     String[] allLearnedWords = learnedWords.toArray(new String[learnedWords.size()]);
     for (int i = 0; i < allLearnedWords.length; i++) {
       String learnedWord = allLearnedWords[i];
-      int distance = calculate(learnedWord, word);
-      if (matches.get(distance) != null) {
-        matches.get(distance).add(learnedWord);
-      } else {
-        List<String> words = new ArrayList<>();
-        words.add(learnedWord);
-        matches.put(distance, words);
+      float maxLength = Math.max(word.length(), learnedWord.length());
+      float minLength = Math.min(word.length(), learnedWord.length());
+      if(maxLength/minLength <= 1.5){
+        int limit = (int) (maxLength/3 + 1);
+        int distance = calculate(learnedWord, word);
+        if(distance <= limit){
+          if (matches.get(distance) != null) {
+            matches.get(distance).add(learnedWord);
+          } else {
+            List<String> words = new ArrayList<>();
+            words.add(learnedWord);
+            matches.put(distance, words);
+          }
+        }
       }
     }
     return getSuggestionsFromCostMap(matches, numberOfSuggestions);

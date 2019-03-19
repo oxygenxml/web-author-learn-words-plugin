@@ -13,9 +13,10 @@ The list of words is stored in a file with the following structure:
 <Dictionary>
     <Learned>
         <Language code="en">
+            <w>wordexample</w>
             <w>worda</w>
-            <w>wordb</w>
-            <w>wordc</w>
+            <w>longword</w>
+            <w>learned word</w>
         </Language>
         <Language code="fr">
             <w>worta</w>
