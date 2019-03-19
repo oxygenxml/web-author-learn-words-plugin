@@ -80,13 +80,12 @@ public class LearnWordTest {
     assertEquals("aaaaaa", s[0]);
     assertEquals("aaaaa", s[1]);
     
+    // WA-2842: There is now a relevance treshold for suggestions. 
     apiDict.setNumberOfSuggestions(4);
     s = apiDict.getSuggestions(en, "aaaaaaa");
-    assertEquals(4, s.length);
+    assertEquals(2, s.length);
     assertEquals("aaaaaa", s[0]);
     assertEquals("aaaaa", s[1]);
-    assertEquals("aaaa", s[2]);
-    assertEquals("bbbbb", s[3]);
     
     // Number of suggestions is greater than number of learned words.
     s = apiDict.getSuggestions(fr, "aaaaaaa");
@@ -96,6 +95,33 @@ public class LearnWordTest {
     s = apiDict.getSuggestions(ja, "aaaaaaa");
     assertEquals(0, s.length);
   }
+  
+  /**
+   * Check that suggestions are more relevant.
+   */
+  @Test
+  public void testGetRelevantSuggestions() {
+    TermsDictionary apiDict = new TermsDictionary();
+    
+    apiDict.setNumberOfSuggestions(4);
+    apiDict.addLearnedWord(en, "aaaaaa");
+    
+    String[] s = apiDict.getSuggestions(en, "aaabbb");
+    assertEquals(0, s.length);
+    
+    // If word sizes vary too much, not relevant.
+    s = apiDict.getSuggestions(en, "aa");
+    assertEquals(0, s.length);
+    s = apiDict.getSuggestions(en, "longaaaaaa");
+    assertEquals(0, s.length);
+    
+    apiDict.addLearnedWord(en, "aaa");
+    s = apiDict.getSuggestions(en, "aa");
+    assertEquals(1, s.length);
+    s = apiDict.getSuggestions(en, "aaaa");
+    assertEquals(1, s.length);
+  }
+  
   /**
    * WA-2827: Check that loading from file method works as expected.
    */
