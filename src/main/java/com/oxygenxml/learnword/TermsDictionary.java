@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -147,7 +148,7 @@ public class TermsDictionary implements Dictionary {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
     DocumentBuilder db = dbf.newDocumentBuilder();
-    Document doc = db.parse(new ByteArrayInputStream(xmlString.getBytes()));
+    Document doc = db.parse(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8)));
     
     Node learnedWordsElement = doc.getElementsByTagName(LEARNED_WORDS_TYPE).item(0);
     if (learnedWordsElement != null) {
