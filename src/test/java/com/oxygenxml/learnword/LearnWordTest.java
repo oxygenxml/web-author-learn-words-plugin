@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Test;
@@ -145,4 +149,28 @@ public class LearnWordTest {
     assertTrue(apiDict.isForbidden("en", "should"));
     assertTrue(apiDict.isForbidden("de", "ignoriert"));
   }
+  
+  /**
+   * WA-2827: Check that loading from file method works as expected.
+   * @throws IOException 
+   * @throws SAXException 
+   * @throws ParserConfigurationException 
+   */
+  @Test
+  public void testUTF8FileReading() throws ParserConfigurationException, SAXException, IOException {
+    TermsDictionary apiDict = new TermsDictionary();
+    
+    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+    DocumentBuilder db = dbf.newDocumentBuilder();
+    Class<? extends DocumentBuilder> documentBuilderclass = db.getClass();
+    URL location = documentBuilderclass.getResource('/' + documentBuilderclass.getName().replace('.', '/') + ".class");
+    System.err.println("which document builder " + location);
+    
+    String filePath = new File("test-files/utf8-test.xml").getAbsolutePath();
+    apiDict.addWordsFromFile(filePath);
+    
+    assertTrue(apiDict.isLearned("en", "kapit\u00FCn"));
+  }
+  
 }
