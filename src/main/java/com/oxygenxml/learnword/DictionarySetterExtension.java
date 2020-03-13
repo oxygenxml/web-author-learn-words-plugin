@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
 import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
@@ -24,7 +25,7 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
   /**
    * Logger for logging.
    */
-  private static final Logger logger = Logger.getLogger(DictionarySetterExtension.class.getName());
+  private static final Logger logger = LogManager.getLogger(DictionarySetterExtension.class.getName());
 
   private TermsDictionary apiDict;
   

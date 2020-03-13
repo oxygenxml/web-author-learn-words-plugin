@@ -7,7 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ro.sync.ecss.extensions.api.ArgumentsMap;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
@@ -27,7 +28,7 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
   /**
    * Logger for logging.
    */
-  private static final Logger logger = Logger.getLogger(UpdateDictionaryOperation.class.getName());
+  private static final Logger logger = LogManager.getLogger(UpdateDictionaryOperation.class.getName());
   
   @Override
   public String getDescription() {

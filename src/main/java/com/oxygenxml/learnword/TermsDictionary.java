@@ -20,7 +20,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,7 +35,7 @@ import ro.sync.exml.workspace.api.spell.Dictionary;
 @XmlRootElement(name = "WordList")
 public class TermsDictionary implements Dictionary {
   
-  private static final Logger logger = Logger.getLogger(TermsDictionary.class.getName());
+  private static final Logger logger = LogManager.getLogger(TermsDictionary.class.getName());
 
   
   private static final String LEARNED_WORDS_TYPE = "Learned";
