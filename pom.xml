@@ -68,7 +68,7 @@
           <nodeVersion>v4.4.2</nodeVersion>
           <npmVersion>2.7.1</npmVersion>
           <nodeDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/nodejs/</nodeDownloadRoot>
-          <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+          <npmDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/npm/</npmDownloadRoot>
           <installDirectory>target</installDirectory>
         </configuration>
         <executions>
