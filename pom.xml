@@ -69,6 +69,7 @@
           <nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
           <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
           <installDirectory>target</installDirectory>
+		  <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
         </configuration>
         <executions>
           <execution>
@@ -83,9 +84,6 @@
             <goals>
               <goal>npm</goal>
             </goals>
-			<configuration>
-              <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-            </configuration>
             <phase>generate-resources</phase>
           </execution>
           <execution>
