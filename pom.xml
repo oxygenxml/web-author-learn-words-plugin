@@ -83,6 +83,9 @@
             <goals>
               <goal>npm</goal>
             </goals>
+			<configuration>
+              <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+            </configuration>
             <phase>generate-resources</phase>
           </execution>
           <execution>
