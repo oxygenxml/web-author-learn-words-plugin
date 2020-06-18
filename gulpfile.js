@@ -13,20 +13,18 @@ var uglifyOptions = {
 
 var webLocation = 'web';
 var targetLocation = "target";
-
-gulp.task('prepare-package', ['i18n'], function() {
+gulp.task('i18n', function (done) {
+  Synci18n({
+    // use this flag only if sure that the plugin will be surrounded by IIFE.
+    useLocalMsgs:true
+  }).generateTranslations();
+  done();
+});
+gulp.task('prepare-package', gulp.series('i18n', function() {
   return gulp.src(webLocation + '/*.js')
     .pipe(concat('plugin.js'))
     .pipe(iife({useStrict: false, prependSemicolon: true}))
     .pipe(uglify(uglifyOptions))
     .pipe(gulp.dest(targetLocation));
-});
-
-gulp.task('i18n', function () {
-  Synci18n({
-    // use this flag only if sure that the plugin will be surrounded by IIFE.
-    useLocalMsgs:true
-  }).generateTranslations();
-});
-
-gulp.task('default', ['prepare-package']);
+}));
+gulp.task('default', gulp.series('prepare-package'));
