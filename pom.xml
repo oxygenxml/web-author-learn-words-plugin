@@ -69,7 +69,7 @@
           <nodeDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/nodejs/</nodeDownloadRoot>
           <npmDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/npm/</npmDownloadRoot>
           <installDirectory>target</installDirectory>
-		  <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+          <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
         </configuration>
         <executions>
           <execution>
