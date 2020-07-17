@@ -61,16 +61,16 @@
     <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
     <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <configuration>
-          <nodeVersion>v0.12.1</nodeVersion>
-          <nodeVersion>v4.4.2</nodeVersion>
-          <npmVersion>2.7.1</npmVersion>
-          <nodeDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/nodejs/</nodeDownloadRoot>
-          <npmDownloadRoot>http://nas.sync.ro/MyWeb/test/jenkins-tools/npm/</npmDownloadRoot>
-          <installDirectory>target</installDirectory>
-        </configuration>
+      <groupId>com.github.eirslett</groupId>
+      <artifactId>frontend-maven-plugin</artifactId>
+      <version>1.9.1</version>
+      <configuration>
+        <nodeVersion>v12.16.0</nodeVersion>
+        <npmVersion>v6.13.4</npmVersion>
+        <nodeDownloadRoot>${node.download.root}</nodeDownloadRoot>
+        <npmDownloadRoot>${npm.download.root}</npmDownloadRoot>
+        <installDirectory>target</installDirectory>
+      </configuration>
         <executions>
           <execution>
             <id>install node and npm</id>
