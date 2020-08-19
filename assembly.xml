@@ -50,6 +50,9 @@
     <file>
       <source>configuration-form.html</source>
     </file>
+    <file>
+      <source>LICENSE</source>
+    </file>
   </files>
 
 </assembly>
