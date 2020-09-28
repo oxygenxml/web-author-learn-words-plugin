@@ -53,9 +53,9 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           }
           
           if (fileSelected != null && fileSelected.equals("on")) {
-            apiDict.addWordsFromFile((String) opts.getOption(ConfigurationPage.FILE_PATH_NAME, null));
+            apiDict.addWordsFromFile(opts.getOption(ConfigurationPage.FILE_PATH_NAME, null));
           } else if (urlSelected != null && urlSelected.equals("on")) {
-            apiDict.addWordsFromUrl(new URL((String) opts.getOption(ConfigurationPage.URL_NAME, null)));
+            apiDict.addWordsFromUrl(new URL(opts.getOption(ConfigurationPage.URL_NAME, null)));
           } else {
             logger.error("No source set for the learn word dictionary.");
           }

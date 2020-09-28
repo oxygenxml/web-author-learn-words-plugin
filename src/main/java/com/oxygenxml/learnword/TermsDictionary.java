@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,6 +41,10 @@ public class TermsDictionary implements Dictionary {
   
   private static final String LEARNED_WORDS_TYPE = "Learned";
   private static final String FORBIDDEN_WORDS_TYPE = "Forbidden";
+  /**
+   * Regex for splitting strings on "-" or "_".
+   */
+  private static final Pattern LANG_SEPARATOR_REGEX = Pattern.compile("-|_");
   
   /**
    * Number of suggestions to display in the contextmenu.
@@ -109,13 +114,34 @@ public class TermsDictionary implements Dictionary {
       learnedForLang.remove(word);
     }
   }
-  
-  public boolean isLearned(String language, String word) {
-    return learnedWords.containsKey(language) && learnedWords.get(language).contains(word);
+
+  /**
+   * Check if a word from a certain language exists in a certain collection.
+   * If the language code is specific (en_US), also check the general language (en).
+   * @param word The word to search for.
+   * @param langCode The language to find the word in.
+   * @param wordsMap The collection of words to check in.
+   * @return Whether the word was found.
+   */
+  private boolean wordExistsInSet(String langCode, String word, HashMap<String,Set<String>> wordsMap) {
+    boolean wordFound = false;
+    wordFound = wordsMap.containsKey(langCode) && wordsMap.get(langCode).contains(word);
+    if (!wordFound) {
+      String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
+      if (langPieces.length > 1) {
+        String shortLang = langPieces[0];
+        wordFound = wordsMap.containsKey(shortLang) && wordsMap.get(shortLang).contains(word);
+      }
+    }
+    return wordFound;
   }
   
-  public boolean isForbidden(String lang, String word) {
-    return forbiddenWords.containsKey(lang) && forbiddenWords.get(lang).contains(word);
+  public boolean isLearned(String langCode, String word) {
+    return wordExistsInSet(langCode, word, learnedWords);
+  }
+  
+  public boolean isForbidden(String langCode, String word) {
+    return wordExistsInSet(langCode, word, forbiddenWords);
   }
   
   public String[] getSuggestions(String lang, String word) {
@@ -226,12 +252,12 @@ public class TermsDictionary implements Dictionary {
     File targetFile = new File(filePath);
     String fileContent = "";
     try {
-      fileContent = FileUtils.readFileToString(targetFile, "UTF-8");
+      fileContent = FileUtils.readFileToString(targetFile, StandardCharsets.UTF_8.toString());
     } catch (FileNotFoundException e) {
       // The file does not exist on disk, so no words to be added.
       logger.debug("Learned words dictionary file not found", e);
     }
-    if (fileContent != "") {
+    if (!fileContent.equals("")) {
       addWordsFromString(fileContent);
     }
   }
