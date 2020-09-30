@@ -11,6 +11,11 @@
 
   <fileSets>
     <fileSet>
+      <directory>target/i18n</directory>
+      <outputDirectory>i18n</outputDirectory>
+    </fileSet>
+
+    <fileSet>
       <directory>target</directory>
       <outputDirectory>web</outputDirectory>
       <includes>
