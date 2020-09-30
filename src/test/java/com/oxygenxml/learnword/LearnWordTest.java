@@ -205,4 +205,47 @@ public class LearnWordTest {
     assertTrue(apiDict.isForbidden(englishSpecific, genericWord));
     assertTrue(apiDict.isForbidden(englishSpecific, specificWord));
   }
+  
+  /**
+   * WA-4219: Words can be learned in generic language but forbidden in specific language.
+   */
+  @Test
+  public void testLearnedInGenericForbiddenInSpecific() {
+    String englishGeneric = "en";
+    String englishSpecific = "en_US";
+    
+    TermsDictionary apiDict = new TermsDictionary();
+    String word = "wasd";
+
+    // Learned word for "en" but forbidden for "en_US".
+    apiDict.addLearnedWord(englishGeneric, word);
+    apiDict.addForbiddenWord(englishSpecific, word);
+    
+    assertTrue(apiDict.isLearned(englishGeneric, word));
+    assertFalse(apiDict.isForbidden(englishGeneric, word));
+    
+    assertTrue(apiDict.isForbidden(englishSpecific, word));
+    assertFalse(apiDict.isLearned(englishSpecific, word));
+  }
+  
+  /**
+   * WA-4219: Words can be forbidden in generic language but learned in specific language.
+   */
+  @Test
+  public void testForbiddenInGenericLearnedInSpecific () {
+    String englishGeneric = "en";
+    String englishSpecific = "en_US";
+    
+    TermsDictionary apiDict = new TermsDictionary();
+    String word = "wasd";
+    // Forbidden for "en" but learned word for "en_US".
+    apiDict.addForbiddenWord(englishGeneric, word);
+    apiDict.addLearnedWord(englishSpecific, word);
+    
+    assertTrue(apiDict.isForbidden(englishGeneric, word));
+    assertFalse(apiDict.isLearned(englishGeneric, word));
+    
+    assertTrue(apiDict.isLearned(englishSpecific, word));
+    assertFalse(apiDict.isForbidden(englishSpecific, word));
+  }
 }

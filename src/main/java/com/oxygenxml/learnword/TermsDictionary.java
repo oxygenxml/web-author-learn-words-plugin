@@ -75,7 +75,7 @@ public class TermsDictionary implements Dictionary {
    */
   public void addLearnedWord(String lang, String word) {
     // If word is forbidden it should not get learned.
-    if (!isForbidden(lang, word)) {
+    if (!wordExistsInSet(lang, word, forbiddenWords)) {
       HashSet<String> wordsForLang = (HashSet<String>) learnedWords.get(lang); 
       if (wordsForLang == null) {
         wordsForLang = new HashSet<>();
@@ -111,7 +111,9 @@ public class TermsDictionary implements Dictionary {
   private void removeLearnedWord(String lang, String word) {
     if (isLearned(lang, word)) {
       Set<String> learnedForLang = learnedWords.get(lang);
-      learnedForLang.remove(word);
+      if (learnedForLang != null) {
+        learnedForLang.remove(word);
+      }
     }
   }
 
@@ -126,22 +128,42 @@ public class TermsDictionary implements Dictionary {
   private boolean wordExistsInSet(String langCode, String word, HashMap<String,Set<String>> wordsMap) {
     boolean wordFound = false;
     wordFound = wordsMap.containsKey(langCode) && wordsMap.get(langCode).contains(word);
-    if (!wordFound) {
-      String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
-      if (langPieces.length > 1) {
-        String shortLang = langPieces[0];
-        wordFound = wordsMap.containsKey(shortLang) && wordsMap.get(shortLang).contains(word);
-      }
-    }
     return wordFound;
   }
   
   public boolean isLearned(String langCode, String word) {
-    return wordExistsInSet(langCode, word, learnedWords);
+    boolean isLearned = false;
+    // Forbidden is stronger than learned
+    if (!isForbidden(langCode, word)) {
+      // Check exact language code
+      isLearned = wordExistsInSet(langCode, word, learnedWords);
+      // If language is specific, also check generic language code      
+      if (!isLearned && langCode.length() > 2) {
+        String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
+        if (langPieces.length > 1) {
+          String shortLang = langPieces[0];
+          isLearned = isLearned(shortLang, word);
+        }
+      }
+    }
+    return  isLearned;
   }
   
   public boolean isForbidden(String langCode, String word) {
-    return wordExistsInSet(langCode, word, forbiddenWords);
+    boolean isForbidden = wordExistsInSet(langCode, word, forbiddenWords);
+    // It might be forbidden in the generic language.
+    if (!isForbidden && langCode.length() > 2) {
+      // Learned in specific language is stronger than forbidden in generic.
+      boolean isLearned = wordExistsInSet(langCode, word, learnedWords);
+      if (!isLearned) {
+        String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
+        if (langPieces.length > 1) {
+          String shortLang = langPieces[0];
+          isForbidden = isForbidden(shortLang, word);
+        }
+      }
+    }
+    return  isForbidden;
   }
   
   public String[] getSuggestions(String lang, String word) {
