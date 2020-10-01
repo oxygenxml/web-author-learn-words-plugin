@@ -136,6 +136,12 @@ public class TermsDictionary implements Dictionary {
   
   /**
    * Get the two letter language code.
+   * If the language code is the two letter language code (ISO 639-1), return it as it is.
+   * If the language code is specific (language_region or language-region), return the two letter part before "_" or "-".
+   * 
+   * For en_US it returns en.
+   * For en it returns en.
+   * 
    * @param langCode The language code to check.
    * @return The two letter language code.
    */
@@ -210,7 +216,7 @@ public class TermsDictionary implements Dictionary {
   
   /**
    * Get suggestions from the learned words for a word in a certain language.
-   * @param langCode The language to check.
+   * @param lang The language to check.
    * @param word The word to get suggestions for.
    * @return The list of suggestions from learned words.
    */
