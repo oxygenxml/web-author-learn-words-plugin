@@ -51,6 +51,11 @@ public class TermsDictionary implements Dictionary {
    */
   private int numberOfSuggestions = 1;
   
+  /**
+   * Expected length for the short language code.
+   */
+  private static final int SHORT_LANG_LENGTH = 2;
+  
   private HashMap<String, Set<String>> learnedWords = new HashMap<>();
   
   private HashMap<String, Set<String>> forbiddenWords = new HashMap<>();
@@ -126,46 +131,89 @@ public class TermsDictionary implements Dictionary {
    * @return Whether the word was found.
    */
   private boolean wordExistsInSet(String langCode, String word, HashMap<String,Set<String>> wordsMap) {
-    boolean wordFound = false;
-    wordFound = wordsMap.containsKey(langCode) && wordsMap.get(langCode).contains(word);
-    return wordFound;
+    return wordsMap.containsKey(langCode) && wordsMap.get(langCode).contains(word);
   }
   
+  /**
+   * Get the two letter language code.
+   * @param langCode The language code to check.
+   * @return The two letter language code.
+   */
+  private String getShortLangCode(String langCode) {
+    String shortLangCode = langCode;
+    if (langCode.length() > SHORT_LANG_LENGTH) {
+      String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
+      if (langPieces.length > 1) {
+        shortLangCode = langPieces[0];
+      }
+    } 
+    return shortLangCode;
+  }
+  
+  /**
+   * Check if a word is learned for a certain language.
+   * If the specific language (en_US) does not contain this learned word, 
+   * the general language (en) will also be checked.
+   * 
+   * Priority order for en_US:
+   * Forbidden (en_US) > Learned (en_US) > Forbidden (en) > Learned (en)
+   * 
+   * @param langCode The language to find the word in.
+   * @param word The word to search for.
+   * @return Whether the word is learned.
+   */
   public boolean isLearned(String langCode, String word) {
-    boolean isLearned = false;
+    boolean learned = false;
     // Forbidden is stronger than learned
     if (!isForbidden(langCode, word)) {
       // Check exact language code
-      isLearned = wordExistsInSet(langCode, word, learnedWords);
-      // If language is specific, also check generic language code      
-      if (!isLearned && langCode.length() > 2) {
-        String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
-        if (langPieces.length > 1) {
-          String shortLang = langPieces[0];
-          isLearned = isLearned(shortLang, word);
+      learned = wordExistsInSet(langCode, word, learnedWords);
+      if (!learned) {
+        // If language is specific, also check generic language code
+        String shortLang = getShortLangCode(langCode);
+        if (!shortLang.equals(langCode)) {
+          learned = isLearned(shortLang, word);
         }
       }
     }
-    return  isLearned;
+    return learned;
   }
   
+  /**
+   * Check if a word is forbidden for a certain language.
+   * If the specific language (en_US) does not contain this forbidden word, 
+   * the general language (en) will also be checked.
+   * 
+   * Priority order for en_US:
+   * Forbidden (en_US) > Learned (en_US) > Forbidden (en) > Learned (en)
+   * 
+   * @param langCode The language to find the word in.
+   * @param word The word to search for.
+   * @return Whether the word is forbidden.
+   */
   public boolean isForbidden(String langCode, String word) {
-    boolean isForbidden = wordExistsInSet(langCode, word, forbiddenWords);
+    boolean forbidden = wordExistsInSet(langCode, word, forbiddenWords);
     // It might be forbidden in the generic language.
-    if (!isForbidden && langCode.length() > 2) {
+    if (!forbidden) {
       // Learned in specific language is stronger than forbidden in generic.
       boolean isLearned = wordExistsInSet(langCode, word, learnedWords);
       if (!isLearned) {
-        String[] langPieces = LANG_SEPARATOR_REGEX.split(langCode);
-        if (langPieces.length > 1) {
-          String shortLang = langPieces[0];
-          isForbidden = isForbidden(shortLang, word);
+        // If language is specific, also check generic language code
+        String shortLang = getShortLangCode(langCode);
+        if (!shortLang.equals(langCode)) {
+          forbidden = wordExistsInSet(shortLang, word, forbiddenWords);
         }
       }
     }
-    return  isForbidden;
+    return forbidden;
   }
   
+  /**
+   * Get suggestions from the learned words for a word in a certain language.
+   * @param langCode The language to check.
+   * @param word The word to get suggestions for.
+   * @return The list of suggestions from learned words.
+   */
   public String[] getSuggestions(String lang, String word) {
     String[] result = {};
     if (lang != null && word != null && 
@@ -192,48 +240,60 @@ public class TermsDictionary implements Dictionary {
     openStream.close();
   }
   
+  /**
+   * Parse the dictionary string and load the words.
+   * @param xmlString The dictionary in string form.
+   * @throws ParserConfigurationException
+   * @throws SAXException
+   * @throws IOException
+   */
   public void addWordsFromString (String xmlString) 
       throws ParserConfigurationException, SAXException, IOException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
     dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
     DocumentBuilder db = dbf.newDocumentBuilder();
     Document doc = db.parse(new ByteArrayInputStream(xmlString.getBytes(StandardCharsets.UTF_8)));
-    Node learnedWordsElement = doc.getElementsByTagName(LEARNED_WORDS_TYPE).item(0);
-    if (learnedWordsElement != null) {
-      loadWordsOfType(learnedWordsElement, LEARNED_WORDS_TYPE);
-    }
     
-    Node forbiddenWordsElement = doc.getElementsByTagName(FORBIDDEN_WORDS_TYPE).item(0);
-    if (forbiddenWordsElement != null) {
-      loadWordsOfType(forbiddenWordsElement, FORBIDDEN_WORDS_TYPE);
+    loadWordsOfType(doc, LEARNED_WORDS_TYPE);
+    loadWordsOfType(doc, FORBIDDEN_WORDS_TYPE);
+  }
+
+  /**
+   * Load the words from the element containing words of a certain type.
+   * @param element The element which contains words of a certain type.
+   * @param type The type of words contained in the element.
+   */
+  private void loadWordsOfType(Document doc, String type) {
+    Node categoryElement = doc.getElementsByTagName(type).item(0);
+    if (categoryElement != null) {
+      NodeList wordElementsFromUrl = categoryElement.getChildNodes();
+      for (int i = 0; i < wordElementsFromUrl.getLength(); i++) {
+        loadWordsOfTypeFromLanguage(type, wordElementsFromUrl.item(i));
+      }
     }
   }
 
   /**
-   * Load the words from the container element according to type.
-   * @param elementFromUrl The element which contains words of a certain type.
+   * Load the words from the language element according to type.
    * @param type The type of words contained in the element.
+   * @param languageElement The element which contains words for a certain language.
    */
-  private void loadWordsOfType(Node elementFromUrl, String type) {
-    NodeList wordElementsFromUrl = elementFromUrl.getChildNodes();
-    for (int i = 0; i < wordElementsFromUrl.getLength(); i++) {
-      Node language = wordElementsFromUrl.item(i);
-      String languageCode = language.getNodeName(); 
-      if (language.getNodeType() == 1) {
-        Element langEl = (Element) language;
-        if (langEl.getAttribute("code") != null) {
-          languageCode = langEl.getAttribute("code");
-        }
+  private void loadWordsOfTypeFromLanguage(String type, Node languageElement) {
+    String languageCode = languageElement.getNodeName(); 
+    if (languageElement.getNodeType() == Node.ELEMENT_NODE) {
+      Element langEl = (Element) languageElement;
+      if (langEl.getAttribute("code") != null) {
+        languageCode = langEl.getAttribute("code");
       }
-      
-      for (int j = 0; j < language.getChildNodes().getLength(); j++) {
-        Node currentWord = language.getChildNodes().item(j);
-        if (currentWord.getNodeType() == 1) {
-          if (type.equals(LEARNED_WORDS_TYPE)) {
-            addLearnedWord(languageCode, currentWord.getTextContent());
-          } else if (type.equals(FORBIDDEN_WORDS_TYPE)) {
-            addForbiddenWord(languageCode, currentWord.getTextContent());
-          }
+    }
+    
+    for (int i = 0; i < languageElement.getChildNodes().getLength(); i++) {
+      Node currentWord = languageElement.getChildNodes().item(i);
+      if (currentWord.getNodeType() == Node.ELEMENT_NODE) {
+        if (type.equals(LEARNED_WORDS_TYPE)) {
+          addLearnedWord(languageCode, currentWord.getTextContent());
+        } else if (type.equals(FORBIDDEN_WORDS_TYPE)) {
+          addForbiddenWord(languageCode, currentWord.getTextContent());
         }
       }
     }
@@ -242,6 +302,7 @@ public class TermsDictionary implements Dictionary {
   /**
    * Get the string representation of the dictionary, 
    * used to write to file after updating the word lists.
+   * @return The string representation of the dictionary
    */
   public String toString() {
     return new MarshalDictionary(learnedWords, forbiddenWords).toString();
