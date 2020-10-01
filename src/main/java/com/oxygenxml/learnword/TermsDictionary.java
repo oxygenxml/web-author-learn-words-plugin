@@ -265,8 +265,8 @@ public class TermsDictionary implements Dictionary {
   }
 
   /**
-   * Load the words from the element containing words of a certain type.
-   * @param element The element which contains words of a certain type.
+   * Load the words from of a certain type the dictionary.
+   * @param doc The dictionary document.
    * @param type The type of words contained in the element.
    */
   private void loadWordsOfType(Document doc, String type) {

@@ -187,22 +187,20 @@ public class LearnWordTest {
 
     // Learned word for "en" will also be learned for "en_US".
     apiDict.addLearnedWord(englishGeneric, genericWord);
-    apiDict.addLearnedWord(englishSpecific, specificWord);
-    
     assertTrue(apiDict.isLearned(englishGeneric, genericWord));
-    assertFalse(apiDict.isLearned(englishGeneric, specificWord));
-
     assertTrue(apiDict.isLearned(englishSpecific, genericWord));
+    
+    apiDict.addLearnedWord(englishSpecific, specificWord);
+    assertFalse(apiDict.isLearned(englishGeneric, specificWord));
     assertTrue(apiDict.isLearned(englishSpecific, specificWord));
     
     // Forbidden word for "en" will also be forbidden for "en_US".
     apiDict.addForbiddenWord(englishGeneric, genericWord);
-    apiDict.addForbiddenWord(englishSpecific, specificWord);
-    
     assertTrue(apiDict.isForbidden(englishGeneric, genericWord));
-    assertFalse(apiDict.isForbidden(englishGeneric, specificWord));
-
     assertTrue(apiDict.isForbidden(englishSpecific, genericWord));
+    
+    apiDict.addForbiddenWord(englishSpecific, specificWord);
+    assertFalse(apiDict.isForbidden(englishGeneric, specificWord));
     assertTrue(apiDict.isForbidden(englishSpecific, specificWord));
   }
   
