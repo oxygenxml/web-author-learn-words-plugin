@@ -12,6 +12,16 @@
   
   <artifactId>web-author-learn-words-plugin</artifactId>
 
+  <developers>
+    <developer>
+      <name>Andrei Popa</name>
+      <email>andrei_popa@sync.ro</email>
+      <roles>
+        <role>manager</role>
+      </roles>
+    </developer>
+  </developers>
+
   <properties>
     <oxygen.sdk.version>23.0-SNAPSHOT</oxygen.sdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
