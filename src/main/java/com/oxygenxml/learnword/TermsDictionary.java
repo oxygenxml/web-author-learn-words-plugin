@@ -241,7 +241,7 @@ public class TermsDictionary implements Dictionary {
   public void addWordsFromUrl(URL url) 
       throws IOException, ParserConfigurationException, SAXException {
     InputStream openStream = url.openStream();
-    String string = IOUtils.toString(openStream);
+    String string = IOUtils.toString(openStream, StandardCharsets.UTF_8);
     addWordsFromString(string);
     openStream.close();
   }
