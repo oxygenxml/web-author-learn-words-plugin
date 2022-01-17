@@ -614,9 +614,9 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
-    <component id="org.slf4j:slf4j-api:1.6.6" product="webapp">
+    <component id="org.slf4j:slf4j-api:1.7.32" product="webapp">
         <name>SLF4J API Module</name>
-        <version>1.6.6</version>
+        <version>1.7.32</version>
         <project-info>
             <about>The slf4j API</about>
             <licensor>QOS.ch</licensor>
