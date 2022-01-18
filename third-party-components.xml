@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <third-party>
-    <component id="org.javassist:javassist:3.20.0-GA" product="webapp">
+    <component id="org.javassist:javassist:3.20.0-GA" draft="false" product="webapp">
         <name>Javassist</name>
         <version>3.20.0-GA</version>
         <project-info>
@@ -156,7 +156,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.mozilla.org/MPL/MPL-1.1.html</url>
         </license>
     </component>
-    <component id="org.attoparser:attoparser:2.0.4.RELEASE" product="webapp">
+    <component id="org.attoparser:attoparser:2.0.4.RELEASE" draft="false" product="webapp">
         <name>attoparser</name>
         <version>2.0.4.RELEASE</version>
         <project-info>
@@ -183,7 +183,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
-    <component id="org.thymeleaf:thymeleaf:3.0.6.RELEASE" product="webapp">
+    <component id="org.thymeleaf:thymeleaf:3.0.6.RELEASE" draft="false" product="webapp">
         <name>thymeleaf</name>
         <version>3.0.6.RELEASE</version>
         <project-info>
@@ -399,7 +399,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
-    <component id="org.unbescape:unbescape:1.1.4.RELEASE" product="webapp">
+    <component id="org.unbescape:unbescape:1.1.4.RELEASE" draft="false" product="webapp">
         <name>unbescape</name>
         <version>1.1.4.RELEASE</version>
         <project-info>
@@ -614,9 +614,9 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
-    <component id="org.slf4j:slf4j-api:1.7.32" product="webapp">
+    <component id="org.slf4j:slf4j-api:1.6.6" draft="false" product="webapp">
         <name>SLF4J API Module</name>
-        <version>1.7.32</version>
+        <version>1.6.6</version>
         <project-info>
             <about>The slf4j API</about>
             <licensor>QOS.ch</licensor>
@@ -649,7 +649,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </component>
-    <component id="ognl:ognl:3.1.12" product="webapp">
+    <component id="ognl:ognl:3.1.12" draft="false" product="webapp">
         <name>OGNL - Object Graph Navigation Library</name>
         <version>3.1.12</version>
         <project-info>
@@ -674,6 +674,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</content>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </component>
+    <component id="xml-apis:xml-apis:1.4.01" draft="true" product="webapp">
+        <name>XML Commons External Components XML APIs</name>
+        <version>1.4.01</version>
+        <project-info>
+            <about>xml-commons provides an Apache-hosted set of DOM, SAX, and 
+    JAXP interfaces for use in other xml-based projects. Our hope is that we 
+    can standardize on both a common version and packaging scheme for these 
+    critical XML standards interfaces to make the lives of both our developers 
+    and users easier. The External Components portion of xml-commons contains 
+    interfaces that are defined by external standards organizations. For DOM, 
+    that's the W3C; for SAX it's David Megginson and sax.sourceforge.net; for 
+    JAXP it's Sun.</about>
+            <licensor></licensor>
+            <start-year></start-year>
+            <project-url>http://xml.apache.org/commons/components/external/</project-url>
+        </project-info>
+        <license>
+            <type>The Apache Software License, Version 2.0</type>
+            <content>Take a look here: http://xml.apache.org/commons/components/external/</content>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+        <license>
+            <type>The SAX License</type>
+            <content>Take a look here: http://xml.apache.org/commons/components/external/</content>
+            <url>http://www.saxproject.org/copying.html</url>
+        </license>
+        <license>
+            <type>The W3C License</type>
+            <content>Take a look here: http://xml.apache.org/commons/components/external/</content>
+            <url>http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/java-binding.zip</url>
         </license>
     </component>
 </third-party>
