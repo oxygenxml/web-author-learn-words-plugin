@@ -676,7 +676,7 @@ limitations under the License.</content>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
-    <component id="xml-apis:xml-apis:1.4.01" draft="true" product="webapp">
+    <component id="xml-apis:xml-apis:1.4.01" draft="false" product="webapp">
         <name>XML Commons External Components XML APIs</name>
         <version>1.4.01</version>
         <project-info>
