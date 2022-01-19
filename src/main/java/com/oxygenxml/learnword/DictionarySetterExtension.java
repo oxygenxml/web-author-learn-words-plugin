@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import ro.sync.basic.util.NumberFormatException;
+import ro.sync.basic.util.NumberParserUtil;
 import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
 import ro.sync.ecss.extensions.api.webapp.WebappSpellchecker;
 import ro.sync.ecss.extensions.api.webapp.access.EditingSessionOpenVetoException;
@@ -39,18 +41,11 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           Map<String, Object> options) throws EditingSessionOpenVetoException {
         // Before editing session starts, get the api dictionary.
         try {
+          setDefaultOptions();
           apiDict = new TermsDictionary();
           WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
           String fileSelected = opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null);
           String urlSelected = opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null);
-          
-          // Set default options if options were never changed.
-          if (fileSelected == null && urlSelected == null) {
-            opts.setOption(ConfigurationPage.FILE_SELECTED_NAME, "on");
-            opts.setOption(ConfigurationPage.FILE_PATH_NAME, LearnWordPlugin.getDefaultTermsFilePath());
-            
-            fileSelected = opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null);
-          }
           
           if (fileSelected != null && fileSelected.equals("on")) {
             apiDict.addWordsFromFile(opts.getOption(ConfigurationPage.FILE_PATH_NAME, null));
@@ -64,12 +59,14 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           int suggestionsToShow = 1;
           String suggestionsNumberFromOptions = opts.getOption(ConfigurationPage.SUGGESTIONS_NUMBER_NAME, null);
           if (suggestionsNumberFromOptions != null) {
-            suggestionsToShow = Integer.parseInt(suggestionsNumberFromOptions);
+            suggestionsToShow = NumberParserUtil.parseInt(suggestionsNumberFromOptions);
           }
           apiDict.setNumberOfSuggestions(suggestionsToShow);
           
         } catch (ParserConfigurationException | SAXException | IOException e) {
           logger.error("Error while getting learn word dictionary", e);
+        } catch (NumberFormatException e) {
+          logger.error("Error while setting number of suggestions", e);
         }
       }
       
@@ -82,6 +79,20 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
         }
       }
     });
+  }
+
+  /**
+   * Set default options if options were never changed.
+   */
+  private void setDefaultOptions() {
+    WSOptionsStorage opts = PluginWorkspaceProvider.getPluginWorkspace().getOptionsStorage();
+    String fileSelected = opts.getOption(ConfigurationPage.FILE_SELECTED_NAME, null);
+    String urlSelected = opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null);
+    
+    if (fileSelected == null && urlSelected == null) {
+      opts.setOption(ConfigurationPage.FILE_SELECTED_NAME, "on");
+      opts.setOption(ConfigurationPage.FILE_PATH_NAME, LearnWordPlugin.getDefaultTermsFilePath());
+    }
   }
 
   public boolean applicationClosing() {
