@@ -7,9 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.sync.ecss.extensions.api.ArgumentsMap;
 import ro.sync.ecss.extensions.api.AuthorOperationException;
 import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
@@ -23,13 +22,9 @@ import ro.sync.exml.workspace.api.options.WSOptionsStorage;
 import ro.sync.exml.workspace.api.spell.Dictionary;
 
 @WebappRestSafe
+@Slf4j
 public class UpdateDictionaryOperation extends AuthorOperationWithResult {
 
-  /**
-   * Logger for logging.
-   */
-  private static final Logger logger = LogManager.getLogger(UpdateDictionaryOperation.class.getName());
-  
   @Override
   public String getDescription() {
     return null;
@@ -77,7 +72,7 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
           try {
             synchronizeFile(spellchecker.getTermsDictionary());
           } catch (IOException e) {
-            logger.error("Error while synchronizing learn word dictionary ", e);
+            log.error("Error while synchronizing learn word dictionary ", e);
           }
         } else if (opts.getOption(ConfigurationPage.URL_SELECTED_NAME, null).equals("on")) {
           String learnWordUrl = opts.getOption(ConfigurationPage.URL_NAME, null);
@@ -92,10 +87,10 @@ public class UpdateDictionaryOperation extends AuthorOperationWithResult {
               }
               connection.connect();
             } catch (IOException e) {
-              logger.error("Error while sending learn word request ", e);
+              log.error("Error while sending learn word request ", e);
             }
           } else {
-            logger.error("No URL specified for learn word action");
+            log.error("No URL specified for learn word action");
           }
         }
       }

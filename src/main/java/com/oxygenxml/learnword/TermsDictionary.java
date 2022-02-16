@@ -21,8 +21,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -31,13 +29,12 @@ import org.xml.sax.SAXException;
 
 import com.oxygenxml.learnword.xmlmarshal.MarshalDictionary;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.sync.exml.workspace.api.spell.Dictionary;
 
 @XmlRootElement(name = "WordList")
+@Slf4j
 public class TermsDictionary implements Dictionary {
-  
-  private static final Logger logger = LogManager.getLogger(TermsDictionary.class.getName());
-
   
   private static final String LEARNED_WORDS_TYPE = "Learned";
   private static final String FORBIDDEN_WORDS_TYPE = "Forbidden";
@@ -344,7 +341,7 @@ public class TermsDictionary implements Dictionary {
       fileContent = FileUtils.readFileToString(targetFile, StandardCharsets.UTF_8.toString());
     } catch (FileNotFoundException e) {
       // The file does not exist on disk, so no words to be added.
-      logger.debug("Learned words dictionary file not found", e);
+      log.debug("Learned words dictionary file not found", e);
     }
     if (!fileContent.equals("")) {
       addWordsFromString(fileContent);

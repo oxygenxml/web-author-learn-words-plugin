@@ -6,10 +6,9 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import lombok.extern.slf4j.Slf4j;
 import ro.sync.basic.util.NumberFormatException;
 import ro.sync.basic.util.NumberParserUtil;
 import ro.sync.ecss.extensions.api.webapp.AuthorDocumentModel;
@@ -22,12 +21,8 @@ import ro.sync.exml.workspace.api.PluginWorkspaceProvider;
 import ro.sync.exml.workspace.api.options.WSOptionsStorage;
 import ro.sync.exml.workspace.api.standalone.StandalonePluginWorkspace;
 
+@Slf4j
 public class DictionarySetterExtension implements WorkspaceAccessPluginExtension {
-  
-  /**
-   * Logger for logging.
-   */
-  private static final Logger logger = LogManager.getLogger(DictionarySetterExtension.class.getName());
 
   private TermsDictionary apiDict;
   
@@ -52,7 +47,7 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           } else if (urlSelected != null && urlSelected.equals("on")) {
             apiDict.addWordsFromUrl(new URL(opts.getOption(ConfigurationPage.URL_NAME, null)));
           } else {
-            logger.error("No source set for the learn word dictionary.");
+            log.error("No source set for the learn word dictionary.");
           }
           
           // Get the number of suggestions to show from the dictionary.
@@ -64,9 +59,9 @@ public class DictionarySetterExtension implements WorkspaceAccessPluginExtension
           apiDict.setNumberOfSuggestions(suggestionsToShow);
           
         } catch (ParserConfigurationException | SAXException | IOException e) {
-          logger.error("Error while getting learn word dictionary", e);
+          log.error("Error while getting learn word dictionary", e);
         } catch (NumberFormatException e) {
-          logger.error("Error while setting number of suggestions", e);
+          log.error("Error while setting number of suggestions", e);
         }
       }
       
