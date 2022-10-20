@@ -52,12 +52,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.oxygenxml</groupId>
-      <artifactId>oxygen-patched-xerces</artifactId>
-      <version>${oxygen.sdk.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
           <version>3.0.1</version>
