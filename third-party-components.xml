@@ -814,7 +814,7 @@ Alternatively, the contents of this software may be used under the terms of the 
         </project-info>
         <license>
             <type>MIT License</type>
-            <content>Copyright (c) 2004-2017 QOS.ch
+            <content>Copyright (c) 2004-2023 QOS.ch
  All rights reserved.
 
  Permission is hereby granted, free  of charge, to any person obtaining
@@ -835,7 +835,7 @@ Alternatively, the contents of this software may be used under the terms of the 
  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</content>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <url>https://www.slf4j.org/license.html</url>
         </license>
     </component>
     <component id="ognl:ognl:3.3.4" draft="false" product="webapp">
