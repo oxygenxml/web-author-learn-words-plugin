@@ -803,7 +803,7 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>https://www.unbescape.org/license.html</url>
         </license>
     </component>
-    <component id="org.slf4j:slf4j-api:1.7.32" draft="false" product="webapp">
+    <component id="org.slf4j:slf4j-api:2.0.9" draft="false" product="webapp">
         <name>SLF4J API Module</name>
         <version>1.7.32</version>
         <project-info>
