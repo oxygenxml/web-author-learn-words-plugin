@@ -3,6 +3,7 @@ package com.oxygenxml.learnword;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.NoSuchFileException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -336,15 +337,17 @@ public class TermsDictionary implements Dictionary {
    */
   public void addWordsFromFile(String filePath) throws IOException, ParserConfigurationException, SAXException {
     File targetFile = new File(filePath);
-    String fileContent = "";
-    try {
-      fileContent = FileUtils.readFileToString(targetFile, StandardCharsets.UTF_8.toString());
-    } catch (FileNotFoundException e) {
-      // The file does not exist on disk, so no words to be added.
-      log.debug("Learned words dictionary file not found", e);
-    }
-    if (!fileContent.equals("")) {
-      addWordsFromString(fileContent);
+    if (targetFile.exists()) {
+      String fileContent = "";
+      try {
+        fileContent = FileUtils.readFileToString(targetFile, StandardCharsets.UTF_8.toString());
+      } catch (FileNotFoundException | NoSuchFileException e) {
+        // The file does not exist on disk, so no words to be added.
+        log.debug("Learned words dictionary file not found", e);
+      }
+      if (!fileContent.equals("")) {
+        addWordsFromString(fileContent);
+      }
     }
   }
 }
