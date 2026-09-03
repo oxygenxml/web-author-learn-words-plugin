@@ -808,13 +808,13 @@ Alternatively, the contents of this software may be used under the terms of the 
         <version>2.0.17</version>
         <project-info>
             <about>The slf4j API</about>
-            <licensor>QOS.ch</licensor>
+            <licensor>QOS.ch Sarl (Switzerland)</licensor>
             <start-year>2005</start-year>
             <project-url>http://www.slf4j.org</project-url>
         </project-info>
         <license>
             <type>MIT License</type>
-            <content>Copyright (c) 2004-2023 QOS.ch
+            <content>Copyright (c) 2004-2022 QOS.ch Sarl (Switzerland)
  All rights reserved.
 
  Permission is hereby granted, free  of charge, to any person obtaining
