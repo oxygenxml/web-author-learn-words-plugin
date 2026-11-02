@@ -372,9 +372,9 @@ Alternatively, the contents of this software may be used under the terms of the 
             <url>https://www.attoparser.org/license.html</url>
         </license>
     </component>
-    <component id="org.thymeleaf:thymeleaf:3.1.2.RELEASE" draft="false" product="webapp">
+    <component id="org.thymeleaf:thymeleaf:3.1.5.RELEASE" draft="false" product="webapp">
         <name>thymeleaf</name>
-        <version>3.1.2.RELEASE</version>
+        <version>3.1.5.RELEASE</version>
         <project-info>
             <about>Modern server-side Java template engine for both web and standalone environments</about>
             <licensor>The THYMELEAF team</licensor>
@@ -585,7 +585,7 @@ Alternatively, the contents of this software may be used under the terms of the 
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.</content>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </component>
     <component id="org.unbescape:unbescape:1.1.6.RELEASE" draft="false" product="webapp">
