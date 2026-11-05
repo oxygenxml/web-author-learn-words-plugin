@@ -8,9 +8,9 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
-import ro.sync.ecss.extensions.api.webapp.plugin.PluginConfigExtension;
+import ro.sync.ecss.extensions.api.webapp.plugin.ServletPluginConfigExtension;
 
-public class ConfigurationPage extends PluginConfigExtension {
+public class ConfigurationPage extends ServletPluginConfigExtension {
 
   static final String FILE_SELECTED_NAME = "file-selected.name";
   static final String FILE_PATH_NAME = "file-path.name";
